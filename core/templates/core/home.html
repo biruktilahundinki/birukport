@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div style="text-align: center; padding: 4rem 0;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;">Expert Services, On Demand</h1>
+    <p style="font-size: 1.25rem; color: var(--secondary); margin-bottom: 2rem;">
+        TaskSync Pro connects you with top-tier professionals for all your digital needs.
+    </p>
+    <a href="{% url 'service_list' %}" class="btn">Browse Services</a>
+</div>
+
+<div class="grid grid-cols-3" style="margin-top: 3rem;">
+    <div class="card">
+        <h3>Secure Payments</h3>
+        <p>Your money is held safely until you approve the work.</p>
+    </div>
+    <div class="card">
+        <h3>24/7 Support</h3>
+        <p>Our team is here to help anytime, anywhere.</p>
+    </div>
+    <div class="card">
+        <h3>Quality Guaranteed</h3>
+        <p>Vetted professionals delivering high-quality results.</p>
+    </div>
+</div>
+{% endblock %}

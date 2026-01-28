@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Software Developer Portfolio - Building Digital Solutions">
+    <title>
+        {% if profile %}{{ profile.name }}{% else %}Developer{% endif %} | Software Developer Portfolio
+    </title>
+    <link rel="stylesheet" href="{% load static %}{% static 'css/portfolio.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo">
+                {% if profile %}{{ profile.name|truncatewords:1 }}{% else %}Dev{% endif %}
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+                <a href="#contact" class="btn btn-primary">Hire Me</a>
+            </div>
+            <button class="mobile-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+
+                    <h1>{% if profile %}{{ profile.hero_greeting }}{% else %}Hi, I'm{% endif %} <span
+                            class="hero-title-highlight">{% if profile %}{{ profile.name }}{% else
+                            %}Software Developer{% endif %}</span></h1>
+                    <div class="hero-typing">
+                        <span class="typing-text">
+                            {% if profile %}{{ profile.title }}{% else %}Full Stack Developer{% endif %}
+                        </span>
+                        <span class="cursor"></span>
+                    </div>
+                    <p class="hero-description">
+                        {% if profile %}
+                        {{ profile.bio|truncatewords:40 }}
+                        {% else %}
+                        I build exceptional digital experiences that combine beautiful design with powerful
+                        functionality. Let's turn your ideas into reality.
+                        {% endif %}
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">
+                            <i class="fas fa-folder-open"></i> View Projects
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i> Get In Touch
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number"
+                                data-count="{% if profile %}{{ profile.years_experience }}{% else %}5{% endif %}">
+                                {% if profile %}{{ profile.years_experience }}{% else %}5{% endif %}+
+                            </div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number"
+                                data-count="{% if profile %}{{ profile.projects_completed }}{% else %}50{% endif %}">
+                                {% if profile %}{{ profile.projects_completed }}{% else %}50{% endif %}+
+                            </div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number"
+                                data-count="{% if profile %}{{ profile.happy_clients }}{% else %}30{% endif %}">
+                                {% if profile %}{{ profile.happy_clients }}{% else %}30{% endif %}+
+                            </div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-avatar">
+                    <img src="{% if profile and profile.profile_image %}{{ profile.profile_image.url }}{% else %}https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop{% endif %}"
+                        alt="Profile">
+                </div>
+                <div class="floating-card card-1">
+                    <div class="floating-card-icon"><i class="fas fa-code"></i></div>
+                    <div class="floating-card-text"><strong>Clean Code</strong><span>Best Practices</span></div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="floating-card-icon"><i class="fas fa-rocket"></i></div>
+                    <div class="floating-card-text"><strong>Fast Delivery</strong><span>On Time</span></div>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="floating-card-icon"><i class="fas fa-star"></i></div>
+                    <div class="floating-card-text"><strong>5 Star</strong><span>Reviews</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content reveal">
+                <div class="about-image">
+                    <div class="about-decoration"></div>
+                    <div class="about-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop"
+                            alt="Developer at work">
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h2>About <span class="hero-title-highlight">Me</span></h2>
+                    <p>
+                        {% if profile %}
+                        {{ profile.bio }}
+                        {% else %}
+                        I'm a passionate software developer with expertise in building modern web applications. I love
+                        turning complex problems into simple, beautiful solutions.
+                        {% endif %}
+                    </p>
+                    <p>With years of experience in full-stack development, I specialize in creating scalable,
+                        maintainable, and user-friendly applications that help businesses grow.</p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i class="fas fa-check"></i></div>
+                            <span>Full Stack Development</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i class="fas fa-check"></i></div>
+                            <span>Clean & Scalable Code</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i class="fas fa-check"></i></div>
+                            <span>Responsive Design</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i class="fas fa-check"></i></div>
+                            <span>API Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title reveal"><span>My Skills</span></h2>
+            <p class="section-subtitle reveal">Technologies and tools I work with</p>
+            <div class="skills-grid">
+                {% regroup skills by get_category_display as skill_categories %}
+                {% for category in skill_categories %}
+                <div class="skill-category reveal">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon">
+                            {% if category.grouper == 'Frontend' %}<i class="fas fa-palette"></i>
+                            {% elif category.grouper == 'Backend' %}<i class="fas fa-server"></i>
+                            {% elif category.grouper == 'Database' %}<i class="fas fa-database"></i>
+                            {% elif category.grouper == 'DevOps' %}<i class="fas fa-cloud"></i>
+                            {% else %}<i class="fas fa-code"></i>{% endif %}
+                        </div>
+                        <h3>{{ category.grouper }}</h3>
+                    </div>
+                    <div class="skill-items">
+                        {% for skill in category.list %}
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">{{ skill.name }}</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="{{ skill.proficiency }}"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% empty %}
+                <!-- Default skills if none in database -->
+                <div class="skill-category reveal">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon"><i class="fas fa-palette"></i></div>
+                        <h3>Frontend</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Frontend Developer</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">HTML / CSS / JS</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">React_native</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category reveal">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon"><i class="fas fa-server"></i></div>
+                        <h3>Backend</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Python / Django</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Node.js</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">REST APIs</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category reveal">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon"><i class="fas fa-database"></i></div>
+                        <h3>Database & DevOps</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">PostgreSQL / MySQL</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Docker / Git</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">AWS / Cloud</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">AI Video Generation</span>
+                                <span class="skill-percent"></span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title reveal"><span>Services I Offer</span></h2>
+            <p class="section-subtitle reveal">Professional services tailored to your needs</p>
+            <div class="services-grid">
+                {% for service in services %}
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        {% if service.icon_image %}
+                        <img src="{{ service.icon_image.url }}" alt="{{ service.title }} icon"
+                            style="width: 100%; height: 100%; object-fit: contain;">
+                        {% elif service.icon_url %}
+                        <img src="{{ service.icon_url }}" alt="{{ service.title }} icon"
+                            style="width: 100%; height: 100%; object-fit: contain;">
+                        {% elif ' ' in service.icon %}
+                        <i class="{{ service.icon }}"></i>
+                        {% elif service.icon %}
+                        <i class="material-icons">{{ service.icon }}</i>
+                        {% else %}
+                        <i class="fas fa-magic"></i>
+                        {% endif %}
+                    </div>
+                    <h3>{{ service.title }}</h3>
+                    <p>{{ service.description }}</p>
+                </div>
+                {% empty %}
+                <div class="service-card reveal">
+                    <div class="service-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Web Development</h3>
+                    <p>Custom web applications built with modern frameworks, optimized for performance and scalability.
+                    </p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Mobile Apps</h3>
+                    <p>Cross-platform mobile applications that deliver native-like experiences on iOS and Android.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>API Development</h3>
+                    <p>RESTful and GraphQL APIs designed for seamless integration and maximum flexibility.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>UI/UX Design</h3>
+                    <p>Beautiful, intuitive interfaces that enhance user experience and drive engagement.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title reveal"><span>My Projects</span></h2>
+            <p class="section-subtitle reveal">Explore my recent work and see what I can build for you</p>
+
+            <div class="projects-filter reveal">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web Apps</button>
+                <button class="filter-btn" data-filter="mobile">Mobile</button>
+                <button class="filter-btn" data-filter="api">API/Backend</button>
+                <button class="filter-btn" data-filter="ai">AI/ML</button>
+            </div>
+
+            <div class="projects-grid">
+                {% for project in projects %}
+                <div class="project-card reveal" data-category="{{ project.category }}">
+                    {% if project.featured %}
+                    <span class="project-featured">Featured</span>
+                    {% endif %}
+                    <div class="project-image">
+                        <img src="{% if project.image_url %}{{ project.image_url.url }}{% endif %}"
+                            alt="{{ project.title }}">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" class="project-link" target="_blank"><i
+                                        class="fab fa-github"></i></a>
+                                {% endif %}
+                                {% if project.live_url %}
+                                <a href="{{ project.live_url }}" class="project-link" target="_blank"><i
+                                        class="fas fa-external-link-alt"></i></a>
+                                {% endif %}
+                                <a href="{% url 'portfolio:project_detail' project.slug %}" class="project-link"
+                                    title="View Details"><i class="fas fa-info-circle"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category">{{ project.get_category_display }}</span>
+                        <h3><a href="{% url 'portfolio:project_detail' project.slug %}"
+                                style="text-decoration: none; color: inherit;">{{ project.title }}</a></h3>
+                        <p>{{ project.short_description }}</p>
+                        <div class="project-tech">
+                            {% for tech in project.get_tech_list %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <!-- Sample projects -->
+                <div class="project-card reveal" data-category="web">
+                    <span class="project-featured">Featured</span>
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop"
+                            alt="E-Commerce Platform">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category">Web App</span>
+                        <h3>E-Commerce Platform</h3>
+                        <p>Full-featured online store with payment integration and inventory management.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Stripe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card reveal" data-category="api">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=500&h=300&fit=crop"
+                            alt="API Service">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category">API/Backend</span>
+                        <h3>RESTful API Service</h3>
+                        <p>Scalable microservices architecture with authentication and rate limiting.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Redis</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card reveal" data-category="mobile">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=300&fit=crop"
+                            alt="Mobile App">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category">Mobile</span>
+                        <h3>Fitness Tracker App</h3>
+                        <p>Cross-platform fitness app with workout tracking and health analytics.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Firebase</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title reveal"><span>Work Experience</span></h2>
+            <p class="section-subtitle reveal">My professional journey</p>
+            <div class="timeline">
+                {% for exp in experiences %}
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">
+                            {{ exp.start_date|date:"M Y" }} -
+                            {% if exp.is_current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}
+                        </span>
+                        <h3>{{ exp.role }}</h3>
+                        <h4>{{ exp.company }}</h4>
+                        <p>{{ exp.description }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2022 - Present</span>
+                        <h3>Senior Software Developer</h3>
+                        <h4>Tech Company Inc.</h4>
+                        <p>Leading development of enterprise applications, mentoring junior developers, and implementing
+                            best practices.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2020 - 2022</span>
+                        <h3>Full Stack Developer</h3>
+                        <h4>Startup Hub</h4>
+                        <p>Built multiple web applications from scratch, collaborated with cross-functional teams.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2018 - 2020</span>
+                        <h3>Junior Developer</h3>
+                        <h4>Digital Agency</h4>
+                        <p>Started my career developing responsive websites and learning best practices.</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Documents Section -->
+    {% if documents %}
+    <section id="documents" class="services">
+        <div class="container">
+            <h2 class="section-title reveal"><span>Documents & Certifications</span></h2>
+            <p class="section-subtitle reveal">My professional documents and certifications</p>
+            <div class="services-grid">
+                {% for doc in documents %}
+                <div class="service-card reveal">
+                    <div class="service-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>{{ doc.title }}</h3>
+                    {% if doc.description %}<p>{{ doc.description }}</p>{% endif %}
+                    <a href="{{ doc.file.url }}" class="btn btn-secondary" target="_blank">
+                        <i class="fas fa-eye"></i> View Document
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info reveal">
+                    <h2>{% if profile.contact_title %}{{ profile.contact_title|safe }}{% else %}Let's Work <span
+                            class="hero-title-highlight">Together</span>{% endif %}</h2>
+                    <p>{% if profile.contact_description %}{{ profile.contact_description }}{% else %}Have a project in
+                        mind? I'd love to hear about it. Send me a message and let's create something
+                        amazing together.{% endif %}</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="contact-item-text">
+                                <h4>Email</h4>
+                                <span>{% if profile %}{{ profile.email }}{% else %}hello@developer.com{% endif %}</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="contact-item-text">
+                                <h4>Location</h4>
+                                <span>{% if profile.location %}{{ profile.location }}{% else %}Available Worldwide
+                                    (Remote){% endif %}</span>
+                            </div>
+                        </div>
+                        {% if profile.phone %}
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                            <div class="contact-item-text">
+                                <h4>Phone</h4>
+                                <span>{{ profile.phone }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="social-links-container" style="margin-top: 30px;">
+                        <h4 style="margin-bottom: 15px;">{% if profile.contact_social_text %}{{
+                            profile.contact_social_text }}{% else %}{% endif %}</h4>
+                        <div class="social-links">
+                            {% if profile.github_url %}
+                            <a href="{{ profile.github_url }}" class="social-link" target="_blank"><i
+                                    class="fab fa-github"></i></a>
+                            {% endif %}
+                            {% if profile.linkedin_url %}
+                            <a href="{{ profile.linkedin_url }}" class="social-link" target="_blank"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
+                            {% if profile.twitter_url %}
+                            <a href="{{ profile.twitter_url }}" class="social-link" target="_blank"><i
+                                    class="fab fa-twitter"></i></a>
+                            {% endif %}
+                            {% if profile.instagram_url %}
+                            <a href="{{ profile.instagram_url }}" class="social-link" target="_blank"><i
+                                    class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if profile.facebook_url %}
+                            <a href="{{ profile.facebook_url }}" class="social-link" target="_blank"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            {% endif %}
+                            {% if profile.telegram_url %}
+                            <a href="{{ profile.telegram_url }}" class="social-link" target="_blank"><i
+                                    class="fab fa-telegram-plane"></i></a>
+                            {% endif %}
+                            {% if profile.whatsapp_url %}
+                            <a href="{{ profile.whatsapp_url }}" class="social-link" target="_blank"><i
+                                    class="fab fa-whatsapp"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper reveal">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                    {% endif %}
+                    <form action="{% url 'portfolio:contact_submit' %}" method="POST" class="contact-form">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" required placeholder="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Your Email</label>
+                                <input type="email" id="email" name="email" required placeholder="john@example.com">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="project_type">Project Type</label>
+                                <select id="project_type" name="project_type">
+                                    <option value="">Select a type</option>
+                                    <option value="web">Web Application</option>
+                                    <option value="mobile">Mobile App</option>
+                                    <option value="api">API/Backend</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="budget">Payment Range</label>
+                                <select id="budget" name="budget">
+                                    <option value="">Select Payment</option>
+                                    <option value="<1k">Less than $50</option>
+                                    <option value="1k-5k">$50 - $80</option>
+                                    <option value="5k-10k">$80- $100</option>
+                                    <option value="10k+">$100+</option>
+                                    <option value="10k+">Agrement</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required placeholder="Project Inquiry">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required
+                                placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <span class="footer-logo">
+                    {% if profile %}{{ profile.name|truncatewords:1 }}{% else %}Dev{% endif %}
+                </span>
+                <span class="footer-text">&copy; 2024 All Rights Reserved.</span>
+                <div class="footer-links">
+                    <a href="#home" class="footer-link">Home</a>
+                    <a href="#projects" class="footer-link">Projects</a>
+                    <a href="#contact" class="footer-link">Contact</a>
+                    <a href="/admin/" class="footer-link" title="Admin Login"><i class="fas fa-lock"></i> Admin</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="{% static 'js/portfolio.js' %}"></script>
+</body>
+
+</html>

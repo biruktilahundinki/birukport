@@ -1,0 +1,66 @@
+<div class="card" style="margin-top: 2rem;">
+    <h3>Order Chat</h3>
+    <div id="chat-log"
+        style="height: 300px; overflow-y: scroll; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 0.375rem; margin-bottom: 1rem; background: #f8fafc;">
+        {% for message in chat_messages %}
+        <div style="margin-bottom: 0.5rem;">
+            <strong>{{ message.sender.username }}:</strong> {{ message.content }}
+        </div>
+        {% endfor %}
+    </div>
+    <div style="display: flex; gap: 0.5rem;">
+        <input id="chat-message-input" type="text" placeholder="Type your message..." style="margin-bottom: 0;">
+        <button id="chat-message-submit" class="btn">Send</button>
+    </div>
+    <small style="color: var(--secondary);">Status: <span id="connection-status">Disconnected</span></small>
+</div>
+
+<script>
+    const orderId = "{{ order.id }}";
+    const userName = "{{ user.username }}";
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + orderId + '/'
+    );
+
+    const chatLog = document.querySelector('#chat-log');
+    const statusSpan = document.querySelector('#connection-status');
+
+    chatSocket.onopen = function (e) {
+        statusSpan.textContent = "Connected";
+        statusSpan.style.color = "green";
+    };
+
+    chatSocket.onclose = function (e) {
+        statusSpan.textContent = "Disconnected";
+        statusSpan.style.color = "red";
+    };
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        const messageElement = document.createElement('div');
+        messageElement.style.marginBottom = '0.5rem';
+        messageElement.innerHTML = `<strong>${data.username}:</strong> ${data.message}`;
+        chatLog.appendChild(messageElement);
+        chatLog.scrollTop = chatLog.scrollHeight;
+    };
+
+    document.querySelector('#chat-message-input').onkeyup = function (e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        if (message.trim()) {
+            chatSocket.send(JSON.dumps({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        }
+    };
+
+    // Auto-scroll to bottom on load
+    chatLog.scrollTop = chatLog.scrollHeight;
+</script>

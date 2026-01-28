@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h1 style="margin: 0;">Order #{{ order.id }}</h1>
+            <p style="color: var(--secondary);">{{ order.service.title }}</p>
+        </div>
+        <span
+            class="badge {% if order.status == 'COMPLETED' %}bg-green{% elif order.status == 'PROCESSING' %}bg-blue{% else %}bg-yellow{% endif %}">
+            {{ order.get_status_display }}
+        </span>
+    </div>
+
+    <div style="margin-top: 1.5rem; background: #f1f5f9; padding: 1rem; border-radius: 0.5rem;">
+        <strong>Requirements:</strong>
+        <p style="margin: 0.5rem 0 0;">{{ order.requirements }}</p>
+    </div>
+
+    {% include 'core/chat_window.html' %}
+</div>
+{% endblock %}

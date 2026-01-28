@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h1 style="margin-bottom: 2rem;">Service Catalog</h1>
+
+<div class="grid grid-cols-3">
+    {% for service in services %}
+    <div class="card" style="display: flex; flex-direction: column;">
+        <div style="margin-bottom: 1rem;">
+            <span class="badge bg-blue" style="margin-bottom: 0.5rem; display: inline-block;">{{
+                service.get_category_display }}</span>
+            <h2 style="margin: 0; font-size: 1.5rem;">{{ service.title }}</h2>
+        </div>
+        <p style="color: var(--secondary); flex-grow: 1;">{{ service.description|truncatewords:20 }}</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+            <span style="font-weight: bold; font-size: 1.25rem;">${{ service.price }}</span>
+            <a href="{% url 'order_create' service.id %}" class="btn">Order Now</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>No services available properly.</p>
+    {% endfor %}
+</div>
+{% endblock %}

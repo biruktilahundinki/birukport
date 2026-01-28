@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+    <h1 style="margin-bottom: 1.5rem;">Complete Your Order</h1>
+    <div class="card">
+        <h2 style="margin-top: 0;">{{ service.title }}</h2>
+        <p style="color: var(--secondary); margin-bottom: 1.5rem;">{{ service.description }}</p>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-bottom: 1.5rem;">
+
+        <form method="post">
+            {% csrf_token %}
+            <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">Order Requirements</label>
+            <textarea name="requirements" rows="5" placeholder="Describe exactly what you need..." required></textarea>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span style="font-weight: bold; font-size: 1.25rem;">Total: ${{ service.price }}</span>
+                <button type="submit" class="btn">Confirm Order</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

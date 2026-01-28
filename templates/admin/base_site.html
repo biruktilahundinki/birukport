@@ -1,0 +1,59 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}TaskSync Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'css/admin_custom.css' %}">
+{% endblock %}
+
+{% block branding %}
+{% load admin_notifications %}
+{% get_unread_messages_count as unread_count %}
+<div class="branding-header">
+    <h1 id="site-name"><a href="{% url 'admin:index' %}" class="branding">TaskSync Pro</a></h1>
+    {% if unread_count > 0 %}
+    <a href="{% url 'admin:portfolio_contactmessage_changelist' %}" class="notification-badge"
+        title="{{ unread_count }} unread messages">
+        <i class="fas fa-envelope"></i>
+        <span>{{ unread_count }}</span>
+    </a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block footer %}
+{{ block.super }}
+{% if unread_count > 0 %}
+<div id="admin-notification-toast" class="admin-toast">
+    <div class="toast-icon">
+        <i class="fas fa-bell"></i>
+    </div>
+    <div class="toast-content">
+        <h4>New Inquiry</h4>
+        <p>You have {{ unread_count }} unread contact inquiries.</p>
+    </div>
+    <button class="toast-close" onclick="document.getElementById('admin-notification-toast').remove()">&times;</button>
+    <a href="{% url 'admin:portfolio_contactmessage_changelist' %}" class="toast-link">Show All</a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toast = document.getElementById('admin-notification-toast');
+        if (toast) {
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 1000);
+
+            // Auto hide after 10 seconds
+            setTimeout(() => {
+                if (toast) toast.classList.remove('show');
+            }, 10000);
+        }
+    });
+</script>
+{% endif %}
+{% endblock %}
