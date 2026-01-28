@@ -3,7 +3,7 @@ services:
     name: tasksync-portfolio
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "daphne tasksync.asgi:application"
+    startCommand: "daphne -b 0.0.0.0 -p $PORT tasksync.asgi:application"
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.0
