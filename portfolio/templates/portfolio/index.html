@@ -104,8 +104,8 @@
             <div class="hero-visual">
                 <div class="hero-avatar">
                     {% if profile and profile.profile_image %}
-                    {% if 'http' in profile.profile_image.url or 'https' in profile.profile_image.url %}
-                    <img src="{{ profile.profile_image.url }}" alt="Profile">
+                    {% if 'http' in profile.profile_image.name or '://' in profile.profile_image.name %}
+                    <img src="{{ profile.profile_image.name }}" alt="Profile">
                     {% else %}
                     <img src="{{ profile.profile_image.url }}" alt="Profile">
                     {% endif %}
@@ -404,8 +404,8 @@
                     {% endif %}
                     <div class="project-image">
                         {% if project.image_url %}
-                        {% if 'http' in project.image_url.url or 'https' in project.image_url.url %}
-                        <img src="{{ project.image_url.url }}" alt="{{ project.title }}">
+                        {% if 'http' in project.image_url.name or '://' in project.image_url.name %}
+                        <img src="{{ project.image_url.name }}" alt="{{ project.title }}">
                         {% else %}
                         <img src="{{ project.image_url.url }}" alt="{{ project.title }}">
                         {% endif %}

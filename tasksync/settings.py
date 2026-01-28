@@ -12,6 +12,16 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',') if os.environ.get('ALLOWED_HOSTS') else ['*']
 
+# DEBUG: Verify file paths on Render
+print(f"--- DEBUG: BASE_DIR calculation: {BASE_DIR} ---")
+try:
+    import os
+    print(f"--- DEBUG: Files in root: {os.listdir(BASE_DIR)} ---")
+    if os.path.exists(os.path.join(BASE_DIR, 'static')):
+        print(f"--- DEBUG: Files in static/: {os.listdir(os.path.join(BASE_DIR, 'static'))} ---")
+except Exception as e:
+    print(f"--- DEBUG ERROR: {e} ---")
+
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
     'https://*.onrender.com/'
@@ -106,7 +116,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_MANIFEST_STRICT = False
 
 # Media files (User uploads)
 MEDIA_URL = '/media/'
