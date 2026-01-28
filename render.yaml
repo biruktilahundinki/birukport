@@ -2,7 +2,7 @@ services:
   - type: web
     name: tasksync-portfolio
     runtime: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --verbosity 2 && python manage.py loadinitialdata"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --verbosity 2 && python manage.py loadinitialdata && ls -R static && ls -R media && ls -R staticfiles"
     startCommand: "daphne -b 0.0.0.0 -p $PORT tasksync.asgi:application"
     envVars:
       - key: PYTHON_VERSION
