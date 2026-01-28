@@ -1,0 +1,128 @@
+[
+{
+  "model": "portfolio.profile",
+  "pk": 1,
+  "fields": {
+    "hero_greeting": "Hi, I'm",
+    "name": "Biruk",
+    "title": "Full Stack Developer",
+    "contact_title": "Let's Work Together",
+    "contact_description": "Have a project in mind? I'd love to hear about it. Send me a message and let's create something amazing together.",
+    "contact_social_text": "Follow Me",
+    "profile_image": "profile_images/R_EEqb2ko.png",
+    "location": "Available Worldwide (Remote)",
+    "phone": null,
+    "github_url": null,
+    "linkedin_url": null,
+    "twitter_url": null,
+    "instagram_url": null,
+    "facebook_url": "https://web.facebook.com/login.php/?_rdc=1&_rdr",
+    "telegram_url": null,
+    "whatsapp_url": null,
+    "email": "biruktilahundinki@gmail.com",
+    "resume_url": null,
+    "years_experience": 2,
+    "projects_completed": 10,
+    "happy_clients": 10
+  }
+},
+{
+  "model": "portfolio.profile",
+  "pk": 2,
+  "fields": {
+    "hero_greeting": "Hi, I'm",
+    "name": "biruk",
+    "title": "Full Stack Developer",
+    "contact_title": "Let's Work Together",
+    "contact_description": "Have a project in mind? I'd love to hear about it. Send me a message and let's create something amazing together.",
+    "contact_social_text": "Follow Me",
+    "profile_image": "profile_images/R.png",
+    "location": "Available Worldwide (Remote)",
+    "phone": null,
+    "github_url": null,
+    "linkedin_url": null,
+    "twitter_url": null,
+    "instagram_url": null,
+    "facebook_url": null,
+    "telegram_url": null,
+    "whatsapp_url": null,
+    "email": "biruktilahundinki@gmail.com",
+    "resume_url": null,
+    "years_experience": 0,
+    "projects_completed": 0,
+    "happy_clients": 0
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 1,
+  "fields": {
+    "name": "ai_video_gertaion",
+    "category": "other",
+    "proficiency": 100,
+    "icon": "dfgfd",
+    "order": 0
+  }
+},
+{
+  "model": "portfolio.skill",
+  "pk": 2,
+  "fields": {
+    "name": "Developer",
+    "category": "frontend",
+    "proficiency": 100,
+    "icon": "tyt",
+    "order": 0
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 1,
+  "fields": {
+    "title": "AI Task Manager",
+    "slug": "ai-task-manager",
+    "description": "An intelligent task management system using Django and OpenAI.",
+    "short_description": "Intelligent task management with AI features.",
+    "image_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600",
+    "category": "web",
+    "technologies": "Python, Django, OpenAI, Tailwind",
+    "github_url": null,
+    "live_url": null,
+    "featured": false,
+    "order": 0,
+    "created_at": "2026-01-27T08:52:46.114Z"
+  }
+},
+{
+  "model": "portfolio.project",
+  "pk": 2,
+  "fields": {
+    "title": "Ai video make",
+    "slug": "ai-video-make",
+    "description": "wetwetwetw",
+    "short_description": "dsfdfd",
+    "image_url": "project_images/R.png",
+    "category": "web",
+    "technologies": "dfgdgd",
+    "github_url": "https://github.com/biruktilahundinki/video-generation-ai",
+    "live_url": "https://ai-video-generator-y3jg.onrender.com/",
+    "featured": true,
+    "order": 0,
+    "created_at": "2026-01-27T15:06:54.352Z"
+  }
+},
+{
+  "model": "portfolio.experience",
+  "pk": 1,
+  "fields": {
+    "company": "addu",
+    "role": "manager",
+    "description": "i manage the over all project in this addu company",
+    "location": "Addis Ababa",
+    "start_date": "2026-01-13",
+    "end_date": "2026-01-14",
+    "is_current": true,
+    "order": 1
+  }
+}
+]
