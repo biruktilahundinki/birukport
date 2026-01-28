@@ -1,18 +1,27 @@
-"""
-Initial data setup script for portfolio
-Run this after migrations to populate the database
-"""
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
 from portfolio.models import Profile, Skill, Project, Experience, Service, Testimonial
+import os
 
 class Command(BaseCommand):
-    help = 'Loads initial portfolio data'
+    help = 'Loads initial portfolio data and creates admin'
 
     def handle(self, *args, **kwargs):
+        # Create Superuser if it doesn't exist
+        admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
+        admin_email = os.environ.get('ADMIN_EMAIL', 'admin@example.com')
+        admin_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
+
+        if not User.objects.filter(is_superuser=True).exists():
+            User.objects.create_superuser(admin_username, admin_email, admin_password)
+            self.stdout.write(self.style.SUCCESS(f'Created Superuser: {admin_username}'))
+        else:
+            self.stdout.write(self.style.SUCCESS('Superuser already exists'))
+
         # Create Profile if it doesn't exist
         if not Profile.objects.exists():
             profile = Profile.objects.create(
-                name="Biruk Tilahun Dinki",
+                name="Biruk Tilahun",
                 title="Full Stack Developer",
                 email="biruktilahundinki@gmail.com",
                 phone="+251 your-phone",
