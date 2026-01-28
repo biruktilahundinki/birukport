@@ -12,6 +12,11 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',') if os.environ.get('ALLOWED_HOSTS') else ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'https://*.onrender.com/'
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -101,7 +106,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Media files (User uploads)
 MEDIA_URL = '/media/'
