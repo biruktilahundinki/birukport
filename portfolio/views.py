@@ -6,16 +6,29 @@ from .models import Profile, Skill, Project, Experience, Service, ContactMessage
 
 def portfolio_home(request):
     """Main portfolio page"""
-    context = {
-        'profile': Profile.objects.first(),
-        'skills': Skill.objects.all(),
-        'projects': Project.objects.all(),
-        'featured_projects': Project.objects.filter(featured=True)[:3],
-        'experiences': Experience.objects.all(),
-        'services': Service.objects.all(),
-        'testimonials': Testimonial.objects.filter(is_active=True),
-        'documents': PortfolioDocument.objects.all(),
-    }
+    try:
+        context = {
+            'profile': Profile.objects.first(),
+            'skills': Skill.objects.all(),
+            'projects': Project.objects.all(),
+            'featured_projects': Project.objects.filter(featured=True)[:3],
+            'experiences': Experience.objects.all(),
+            'services': Service.objects.all(),
+            'testimonials': Testimonial.objects.filter(is_active=True),
+            'documents': PortfolioDocument.objects.all(),
+        }
+    except Exception as e:
+        # Handle case where database tables don't exist yet
+        context = {
+            'profile': None,
+            'skills': [],
+            'projects': [],
+            'featured_projects': [],
+            'experiences': [],
+            'services': [],
+            'testimonials': [],
+            'documents': [],
+        }
     return render(request, 'portfolio/index.html', context)
 
 
