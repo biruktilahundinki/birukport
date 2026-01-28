@@ -102,8 +102,16 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-avatar">
-                    <img src="{% if profile and profile.profile_image %}{{ profile.profile_image.url }}{% else %}https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop{% endif %}"
+                    {% if profile and profile.profile_image %}
+                    {% if 'http' in profile.profile_image.url %}
+                    <img src="{{ profile.profile_image }}" alt="Profile">
+                    {% else %}
+                    <img src="{{ profile.profile_image.url }}" alt="Profile">
+                    {% endif %}
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
                         alt="Profile">
+                    {% endif %}
                 </div>
                 <div class="floating-card card-1">
                     <div class="floating-card-icon"><i class="fas fa-code"></i></div>
@@ -394,8 +402,13 @@
                     <span class="project-featured">Featured</span>
                     {% endif %}
                     <div class="project-image">
-                        <img src="{% if project.image_url %}{{ project.image_url.url }}{% endif %}"
-                            alt="{{ project.title }}">
+                        {% if project.image_url %}
+                        {% if 'http' in project.image_url.url %}
+                        <img src="{{ project.image_url }}" alt="{{ project.title }}">
+                        {% else %}
+                        <img src="{{ project.image_url.url }}" alt="{{ project.title }}">
+                        {% endif %}
+                        {% endif %}
                         <div class="project-overlay">
                             <div class="project-links">
                                 {% if project.github_url %}

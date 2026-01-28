@@ -11,7 +11,6 @@ urlpatterns = [
     path('', include('portfolio.urls')),  # Portfolio as main page
     path('tasksync/', include('core.urls')),  # Old app moved to /tasksync/
     
-    # Static and Media files for Render production
+    # Media files for Render production (WhiteNoise handles static)
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
-    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
 ]
