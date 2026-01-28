@@ -1,6 +1,5 @@
 import os
 from django.core.asgi import get_asgi_application
-from whitenoise import WhiteNoise
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tasksync.settings')
 
@@ -13,7 +12,7 @@ from channels.auth import AuthMiddlewareStack
 import chat.routing
 
 application = ProtocolTypeRouter({
-    "http": WhiteNoise(django_asgi_app),
+    "http": django_asgi_app,
     "websocket": AuthMiddlewareStack(
         URLRouter(
             chat.routing.websocket_urlpatterns
