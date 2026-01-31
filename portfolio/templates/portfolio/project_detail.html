@@ -63,15 +63,20 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <a href="{% url 'portfolio:home' %}" class="nav-logo">Dev</a>
+            <a href="{% url 'portfolio:home' %}" class="nav-logo">{% if profile %}{{ profile.name|truncatewords:1 }}{%
+                else %}Dev{% endif %}</a>
             <ul class="nav-menu">
-                <li><a href="{% url 'portfolio:home' %}#home" class="nav-link">Home</a></li>
-                <li><a href="{% url 'portfolio:home' %}#projects" class="nav-link">Projects</a></li>
-                <li><a href="{% url 'portfolio:home' %}#contact" class="nav-link">Contact</a></li>
+                <li><a href="{% url 'portfolio:home' %}#home" class="nav-link">{{ site.nav_home_text|default:"Home"
+                        }}</a></li>
+                <li><a href="{% url 'portfolio:home' %}#projects" class="nav-link">{{
+                        site.nav_projects_text|default:"Projects" }}</a></li>
+                <li><a href="{% url 'portfolio:home' %}#contact" class="nav-link">{{
+                        site.nav_contact_text|default:"Contact" }}</a></li>
             </ul>
             <div class="nav-actions">
                 <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
-                <a href="{% url 'portfolio:home' %}#contact" class="btn btn-primary">Hire Me</a>
+                <a href="{% url 'portfolio:home' %}#contact" class="btn btn-primary">{{
+                    site.nav_hire_button_text|default:"Hire Me" }}</a>
             </div>
             <button class="mobile-toggle" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
@@ -167,8 +172,9 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <span class="footer-logo">Dev</span>
-                <span class="footer-text">&copy; {% now "Y" %} All Rights Reserved.</span>
+                <span class="footer-logo">{% if profile %}{{ profile.name|truncatewords:1 }}{% else %}Dev{% endif
+                    %}</span>
+                <span class="footer-text">{{ site.footer_copyright|default:"&copy; 2024 All Rights Reserved." }}</span>
             </div>
         </div>
     </footer>

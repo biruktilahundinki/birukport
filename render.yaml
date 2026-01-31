@@ -2,18 +2,24 @@ services:
   - type: web
     name: tasksync-portfolio
     runtime: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --verbosity 2 && python manage.py loadinitialdata && ls -R static && ls -R media && ls -R staticfiles"
+    buildCommand: "./build.sh"
     startCommand: "daphne -b 0.0.0.0 -p $PORT tasksync.asgi:application"
     envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tasksync-db
+          property: connectionString
       - key: PYTHON_VERSION
         value: 3.12.0
       - key: DJANGO_SETTINGS_MODULE
         value: tasksync.settings
-      - key: PORT
-        value: 8000
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
         value: "*"
+
+databases:
+  - name: tasksync-db
+    plan: free

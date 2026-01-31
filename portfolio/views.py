@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
-from .models import Profile, Skill, Project, Experience, Service, ContactMessage, Testimonial, PortfolioDocument
+from .models import Profile, Skill, SkillCategory, Project, Experience, Service, ContactMessage, Testimonial, PortfolioDocument, BudgetOption
 
 
 def portfolio_home(request):
@@ -9,7 +9,8 @@ def portfolio_home(request):
     try:
         context = {
             'profile': Profile.objects.first(),
-            'skills': Skill.objects.all(),
+            'skill_categories': SkillCategory.objects.prefetch_related('skills').all(),
+            'budget_options': BudgetOption.objects.all(),
             'projects': Project.objects.all(),
             'featured_projects': Project.objects.filter(featured=True)[:3],
             'experiences': Experience.objects.all(),

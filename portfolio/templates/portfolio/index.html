@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional Software Developer Portfolio - Building Digital Solutions">
+    <meta name="description" content="{{ site.meta_description }}">
     <title>
-        {% if profile %}{{ profile.name }}{% else %}Developer{% endif %} | Software Developer Portfolio
+        {% if profile %}{{ profile.name }}{% else %}Developer{% endif %} | {{ site.meta_description }}
     </title>
     <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,17 +27,19 @@
                 {% if profile %}{{ profile.name|truncatewords:1 }}{% else %}Dev{% endif %}
             </a>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#services" class="nav-link">Services</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                {% if site.show_hero %}<li><a href="#home" class="nav-link active">Home</a></li>{% endif %}
+                {% if site.show_about %}<li><a href="#about" class="nav-link">About</a></li>{% endif %}
+                {% if site.show_skills %}<li><a href="#skills" class="nav-link">Skills</a></li>{% endif %}
+                {% if site.show_services %}<li><a href="#services" class="nav-link">Services</a></li>{% endif %}
+                {% if site.show_projects %}<li><a href="#projects" class="nav-link">Projects</a></li>{% endif %}
+                {% if site.show_experience %}<li><a href="#experience" class="nav-link">Experience</a></li>{% endif %}
+                {% if site.show_documents %}<li><a href="#documents" class="nav-link">Documents</a></li>{% endif %}
+                {% if site.show_testimonials %}<li><a href="#testimonials" class="nav-link">Testimonials</a></li>{% endif %}
+                {% if site.show_contact %}<li><a href="#contact" class="nav-link">Contact</a></li>{% endif %}
             </ul>
             <div class="nav-actions">
                 <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
-                <a href="#contact" class="btn btn-primary">Hire Me</a>
+                {% if site.show_contact %}<a href="#contact" class="btn btn-primary">Hire Me</a>{% endif %}
             </div>
             <button class="mobile-toggle" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
@@ -46,6 +48,7 @@
     </nav>
 
     <!-- Hero Section -->
+    {% if site.show_hero %}
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
@@ -61,7 +64,9 @@
                         <span class="cursor"></span>
                     </div>
                     <p class="hero-description">
-                        {% if profile %}
+                        {% if site.hero_description %}
+                        {{ site.hero_description }}
+                        {% elif profile %}
                         {{ profile.bio|truncatewords:40 }}
                         {% else %}
                         I build exceptional digital experiences that combine beautiful design with powerful
@@ -129,30 +134,37 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- About Section -->
+    {% if site.show_about %}
     <section id="about" class="about">
         <div class="container">
             <div class="about-content reveal">
                 <div class="about-image">
                     <div class="about-decoration"></div>
                     <div class="about-image-wrapper">
+                        {% if profile and profile.about_image %}
+                        <img src="{{ profile.about_image.url }}" alt="Developer at work">
+                        {% else %}
                         <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop"
                             alt="Developer at work">
+                        {% endif %}
                     </div>
                 </div>
                 <div class="about-text">
-                    <h2>About <span class="hero-title-highlight">Me</span></h2>
+                    <h2>About Me</h2>
                     <p>
-                        {% if profile %}
+                        {% if site.about_description %}
+                        {{ site.about_description }}
+                        {% elif profile %}
                         {{ profile.bio }}
                         {% else %}
                         I'm a passionate software developer with expertise in building modern web applications. I love
                         turning complex problems into simple, beautiful solutions.
                         {% endif %}
                     </p>
-                    <p>With years of experience in full-stack development, I specialize in creating scalable,
-                        maintainable, and user-friendly applications that help businesses grow.</p>
+                    <p>{{ site.about_description2 }}</p>
                     <div class="about-features">
                         <div class="about-feature">
                             <div class="about-feature-icon"><i class="fas fa-check"></i></div>
@@ -175,161 +187,58 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Skills Section -->
+    {% if site.show_skills %}
     <section id="skills" class="skills">
         <div class="container">
             <h2 class="section-title reveal"><span>My Skills</span></h2>
             <p class="section-subtitle reveal">Technologies and tools I work with</p>
             <div class="skills-grid">
-                {% regroup skills by get_category_display as skill_categories %}
                 {% for category in skill_categories %}
+                {% if category.skills.all %}
                 <div class="skill-category reveal">
                     <div class="skill-category-header">
                         <div class="skill-category-icon">
-                            {% if category.grouper == 'Frontend' %}<i class="fas fa-palette"></i>
-                            {% elif category.grouper == 'Backend' %}<i class="fas fa-server"></i>
-                            {% elif category.grouper == 'Database' %}<i class="fas fa-database"></i>
-                            {% elif category.grouper == 'DevOps' %}<i class="fas fa-cloud"></i>
+                            {% if "Front" in category.name %}<i class="fas fa-palette"></i>
+                            {% elif "Back" in category.name %}<i class="fas fa-server"></i>
+                            {% elif "Design" in category.name %}<i class="fas fa-pen-nib"></i>
+                            {% elif "Data" in category.name %}<i class="fas fa-database"></i>
+                            {% elif "DevOps" in category.name %}<i class="fas fa-cloud"></i>
+                            {% elif "Mobile" in category.name %}<i class="fas fa-mobile-alt"></i>
                             {% else %}<i class="fas fa-code"></i>{% endif %}
                         </div>
-                        <h3>{{ category.grouper }}</h3>
+                        <h3>{{ category.name }}</h3>
                     </div>
                     <div class="skill-items">
-                        {% for skill in category.list %}
+                        {% for skill in category.skills.all %}
                         <div class="skill-item">
                             <div class="skill-info">
-                                <span class="skill-name">{{ skill.name }}</span>
-                                <span class="skill-percent"></span>
+                                <span class="skill-name">
+                                    {% if skill.icon %}<i class="{{ skill.icon }}"></i> {% endif %}{{ skill.name }}
+                                </span>
+                                <span class="skill-percent">{{ skill.proficiency }}%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-progress" data-progress="{{ skill.proficiency }}"></div>
+                                <div class="skill-progress" style="width: {{ skill.proficiency }}%"></div>
                             </div>
                         </div>
                         {% endfor %}
                     </div>
                 </div>
+                {% endif %}
                 {% empty %}
-                <!-- Default skills if none in database -->
                 <div class="skill-category reveal">
-                    <div class="skill-category-header">
-                        <div class="skill-category-icon"><i class="fas fa-palette"></i></div>
-                        <h3>Frontend</h3>
-                    </div>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Frontend Developer</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">HTML / CSS / JS</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">React_native</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category reveal">
-                    <div class="skill-category-header">
-                        <div class="skill-category-icon"><i class="fas fa-server"></i></div>
-                        <h3>Backend</h3>
-                    </div>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Python / Django</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Node.js</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">REST APIs</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category reveal">
-                    <div class="skill-category-header">
-                        <div class="skill-category-icon"><i class="fas fa-database"></i></div>
-                        <h3>Database & DevOps</h3>
-                    </div>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">PostgreSQL / MySQL</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Docker / Git</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">AWS / Cloud</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">AI Video Generation</span>
-                                <span class="skill-percent"></span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-progress="100"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <h3>No skills added yet</h3>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
 
+    {% if site.show_services %}
     <section id="services" class="services">
         <div class="container">
             <h2 class="section-title reveal"><span>Services I Offer</span></h2>
@@ -381,8 +290,10 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Projects Section -->
+    {% if site.show_projects %}
     <section id="projects" class="projects">
         <div class="container">
             <h2 class="section-title reveal"><span>My Projects</span></h2>
@@ -508,8 +419,10 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Experience Section -->
+    {% if site.show_experience %}
     <section id="experience" class="experience">
         <div class="container">
             <h2 class="section-title reveal"><span>Work Experience</span></h2>
@@ -521,7 +434,8 @@
                     <div class="timeline-content">
                         <span class="timeline-date">
                             {{ exp.start_date|date:"M Y" }} -
-                            {% if exp.is_current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}
+                            {% if exp.is_current %}Present{% else %}{{
+                            exp.end_date|date:"M Y" }}{% endif %}
                         </span>
                         <h3>{{ exp.role }}</h3>
                         <h4>{{ exp.company }}</h4>
@@ -561,9 +475,10 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Documents Section -->
-    {% if documents %}
+    {% if documents and site.show_documents %}
     <section id="documents" class="services">
         <div class="container">
             <h2 class="section-title reveal"><span>Documents & Certifications</span></h2>
@@ -584,7 +499,41 @@
     </section>
     {% endif %}
 
+    <!-- Testimonials Section -->
+    {% if site.show_testimonials %}
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title reveal"><span>What People Say</span></h2>
+            <p class="section-subtitle reveal">Testimonials from clients and colleagues</p>
+            <div class="testimonials-grid">
+                {% for testimonial in testimonials %}
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left"></i>
+                        <p>{{ testimonial.content }}</p>
+                    </div>
+                    <div class="testimonial-author">
+                        {% if testimonial.image %}
+                        <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" class="testimonial-avatar">
+                        {% endif %}
+                        <div class="testimonial-info">
+                            <h4>{{ testimonial.name }}</h4>
+                            <span>{{ testimonial.role }}{% if testimonial.company %} at {{ testimonial.company }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="testimonial-card reveal">
+                    <p>No testimonials added yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
     <!-- Contact Section -->
+    {% if site.show_contact %}
     <section id="contact" class="contact">
         <div class="container">
             <div class="contact-content">
@@ -621,8 +570,7 @@
                         {% endif %}
                     </div>
                     <div class="social-links-container" style="margin-top: 30px;">
-                        <h4 style="margin-bottom: 15px;">{% if profile.contact_social_text %}{{
-                            profile.contact_social_text }}{% else %}{% endif %}</h4>
+                        <h4 style="margin-bottom: 15px;">Follow Me</h4>
                         <div class="social-links">
                             {% if profile.github_url %}
                             <a href="{{ profile.github_url }}" class="social-link" target="_blank"><i
@@ -688,11 +636,15 @@
                                 <label for="budget">Payment Range</label>
                                 <select id="budget" name="budget">
                                     <option value="">Select Payment</option>
+                                    {% for option in budget_options %}
+                                    <option value="{{ option.value }}">{{ option.label }}</option>
+                                    {% empty %}
                                     <option value="<1k">Less than $50</option>
                                     <option value="1k-5k">$50 - $80</option>
-                                    <option value="5k-10k">$80- $100</option>
+                                    <option value="5k-10k">$80 - $100</option>
                                     <option value="10k+">$100+</option>
-                                    <option value="10k+">Agrement</option>
+                                    <option value="10k+">Agreement</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -713,6 +665,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Footer -->
     <footer class="footer">
@@ -723,9 +676,9 @@
                 </span>
                 <span class="footer-text">&copy; 2024 All Rights Reserved.</span>
                 <div class="footer-links">
-                    <a href="#home" class="footer-link">Home</a>
-                    <a href="#projects" class="footer-link">Projects</a>
-                    <a href="#contact" class="footer-link">Contact</a>
+                    {% if site.show_hero %}<a href="#home" class="footer-link">Home</a>{% endif %}
+                    {% if site.show_projects %}<a href="#projects" class="footer-link">Projects</a>{% endif %}
+                    {% if site.show_contact %}<a href="#contact" class="footer-link">Contact</a>{% endif %}
                     <a href="/admin/" class="footer-link" title="Admin Login"><i class="fas fa-lock"></i> Admin</a>
                 </div>
             </div>

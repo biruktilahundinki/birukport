@@ -12,23 +12,12 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',') if os.environ.get('ALLOWED_HOSTS') else ['*']
 
-# DEBUG: Verify file paths on Render
-print(f"--- DEBUG: BASE_DIR calculation: {BASE_DIR} ---")
-try:
-    import os
-    print(f"--- DEBUG: Files in root: {os.listdir(BASE_DIR)} ---")
-    if os.path.exists(os.path.join(BASE_DIR, 'static')):
-        print(f"--- DEBUG: Files in static/: {os.listdir(os.path.join(BASE_DIR, 'static'))} ---")
-except Exception as e:
-    print(f"--- DEBUG ERROR: {e} ---")
-
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
     'https://*.onrender.com/'
 ]
 
 # Application definition
-
 INSTALLED_APPS = [
     'daphne',
     'chat',
@@ -40,6 +29,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'portfolio',
+    # Cloudinary for cloud storage
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 ASGI_APPLICATION = 'tasksync.asgi.application'
@@ -75,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'portfolio.context_processors.site_content',  # Global site content
             ],
         },
     },
@@ -82,7 +75,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tasksync.wsgi.application'
 
-# Database
+# Database - Use PostgreSQL for production (persistent)
+# Set DATABASE_URL environment variable on Render/Heroku
+# Example: postgres://user:password@host:5432/dbname
 DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
@@ -120,9 +115,29 @@ STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_MANIFEST_STRICT = False
 
-# Media files (User uploads)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# ============================================
+# CLOUDINARY CONFIGURATION FOR MEDIA FILES
+# ============================================
+# Set these environment variables on Render:
+# CLOUDINARY_CLOUD_NAME - Your Cloudinary cloud name
+# CLOUDINARY_API_KEY - Your Cloudinary API key
+# CLOUDINARY_API_SECRET - Your Cloudinary API secret
+
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL', '')
+
+if CLOUDINARY_URL or os.environ.get('CLOUDINARY_CLOUD_NAME'):
+    # Use Cloudinary for media storage in production
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', ''),
+        'API_KEY': os.environ.get('CLOUDINARY_API_KEY', ''),
+        'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', ''),
+    }
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    MEDIA_URL = '/media/'
+else:
+    # Local development - use local file storage
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 # Email Configuration - Gmail SMTP
 # IMPORTANT: You must create a Gmail App Password:
@@ -136,6 +151,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'biruktilahundinki@gmail.com'
-EMAIL_HOST_PASSWORD = 'dinj nlat ambs vqeo'
-DEFAULT_FROM_EMAIL = 'biruktilahundinki@gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'biruktilahundinki@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'dinj nlat ambs vqeo')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'biruktilahundinki@gmail.com')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
